@@ -33,6 +33,8 @@ public class UsbStateReceiver extends BroadcastReceiver {
         }
         PackageManager pm = context.getPackageManager();
         Intent launch = pm.getLaunchIntentForPackage("net.kwain.simpletether");
+        launch.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_FROM_BACKGROUND
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(launch);
     }
 }

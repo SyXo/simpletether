@@ -54,7 +54,9 @@ public class NetworkStatsActivity extends AppCompatActivity {
 
     private void openConnectionSharingSettings() {
         Intent launch = new Intent();
-        launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        launch.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_FROM_BACKGROUND);
         launch.setClassName("com.android.settings", "com.android.settings.TetherSettings");
         startActivity(launch);
     }
