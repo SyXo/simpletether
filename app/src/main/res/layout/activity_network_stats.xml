@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     tools:context="net.kwain.simpletether.NetworkStatsActivity">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -18,8 +17,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView"
@@ -28,31 +28,28 @@
                 android:text="@string/live_traffic"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView_live_traffic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/chart_live_traffic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginBottom="10dp" />
 
-                <lecho.lib.hellocharts.view.LineChartView
-                    android:id="@+id/chart_live_traffic"
-                    android:layout_width="280dp"
-                    android:layout_height="200dp" />
+        </LinearLayout>
 
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
@@ -61,29 +58,19 @@
                 android:text="@string/data_consumption"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView_data_consumption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/chart_data_consumption"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <lecho.lib.hellocharts.view.LineChartView
-                    android:id="@+id/chart_data_consumption"
-                    android:layout_width="280dp"
-                    android:layout_height="200dp" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:layout_marginBottom="10dp" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

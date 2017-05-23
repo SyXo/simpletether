@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +92,23 @@ public class NetworkStatsActivity extends AppCompatActivity {
             return new PointValue(idx, bDiff / 1024);
         }
 
+        public String getSpeedStr(Point previousPoint) {
+            if (previousPoint == null) {
+                Log.w(TAG, "getSpeedStr(): no previous point");
+                return "RX: 0B/s ; TX: 0B/s";
+            }
+            float tDiff = ((float)((date.getTime() - previousPoint.date.getTime()))) / 1000;
+            float rxSpeed = ((float)((rx) - previousPoint.rx)) / tDiff;
+            float txSpeed = ((float)((tx) - previousPoint.tx)) / tDiff;
+            return ("RX: " + (((int)(rxSpeed)) / 1024) + "KiB/s" +
+                    " ; TX: " + (((int)(txSpeed)) / 1024) + "KiB/s");
+        }
+
+        public String getTotalStr() {
+            long t = (rx + tx) / 1024 / 1024 ;
+            return ("Total: " + Long.toString(t) + "MiB");
+        }
+
         public PointValue getSpeedRx(int idx, Point previousPoint) {
             if (previousPoint == null) {
                 return new PointValue(idx, 0f);
@@ -168,6 +186,9 @@ public class NetworkStatsActivity extends AppCompatActivity {
     }
 
     private void updateSpeedGraph() {
+        if (stats.size() <= 0)
+            return;
+
         LineChartView chart = (LineChartView)findViewById(R.id.chart_live_traffic);
 
         List<Line> lines = new ArrayList<>();
@@ -177,14 +198,23 @@ public class NetworkStatsActivity extends AppCompatActivity {
         List<PointValue> sum = new ArrayList<>();
 
         Point previous = null;
+        Point pprevious = null;
+        Point last = null;
         int idx = 0;
+
         for (Point pt : stats) {
+            last = pt;
             sum.add(pt.getSpeed(idx, previous));
             rx.add(pt.getSpeedRx(idx, previous));
             tx.add(pt.getSpeedTx(idx, previous));
+
+            pprevious = previous;
             previous = pt;
             idx += 1;
         }
+
+        TextView txt = (TextView) findViewById(R.id.textView_live_traffic);
+        txt.setText(last.getSpeedStr(pprevious));
 
         Line line;
 
@@ -218,9 +248,13 @@ public class NetworkStatsActivity extends AppCompatActivity {
                 setTextColor(Color.BLACK)
         );
         chart.setLineChartData(data);
+
     }
 
     private void updateTotalGraph() {
+        if (stats.size() <= 0)
+            return;
+
         LineChartView chart = (LineChartView)findViewById(R.id.chart_data_consumption);
 
         List<Line> lines = new ArrayList<>();
@@ -269,6 +303,9 @@ public class NetworkStatsActivity extends AppCompatActivity {
                 setTextColor(Color.BLACK)
         );
         chart.setLineChartData(data);
+
+        TextView txt = (TextView) findViewById(R.id.textView_data_consumption);
+        txt.setText(stats.getLast().getTotalStr());
     }
 
     @Override
