@@ -73,25 +73,25 @@ public class NetworkStatsActivity extends AppCompatActivity {
         }
 
         public PointValue getRx(int idx) {
-            return new PointValue(idx, (float)(rx / 1024 / 1024));
+            return new PointValue(idx * REFRESH_INTERVAL, (float)(rx / 1024 / 1024));
         }
 
         public PointValue getTx(int idx) {
-            return new PointValue(idx, (float)(tx / 1024 / 1024));
+            return new PointValue(idx * REFRESH_INTERVAL, (float)(tx / 1024 / 1024));
         }
 
         public PointValue getSum(int idx) {
-            return new PointValue(idx, (float)((rx + tx) / 1024 / 1024));
+            return new PointValue(idx * REFRESH_INTERVAL, (float)((rx + tx) / 1024 / 1024));
         }
 
         public PointValue getSpeed(int idx, Point previousPoint) {
             if (previousPoint == null) {
-                return new PointValue(idx, 0f);
+                return new PointValue(idx * REFRESH_INTERVAL, 0f);
             }
             float tDiff = ((float)((date.getTime() - previousPoint.date.getTime()))) / 1000;
             float bDiff = ((float)((rx + tx) - previousPoint.rx - previousPoint.tx));
             bDiff /= tDiff;
-            return new PointValue(idx, bDiff / 1024);
+            return new PointValue(idx * REFRESH_INTERVAL, bDiff / 1024);
         }
 
         public String getSpeedStr(Point previousPoint) {
@@ -113,22 +113,22 @@ public class NetworkStatsActivity extends AppCompatActivity {
 
         public PointValue getSpeedRx(int idx, Point previousPoint) {
             if (previousPoint == null) {
-                return new PointValue(idx, 0f);
+                return new PointValue(idx * REFRESH_INTERVAL, 0f);
             }
             float tDiff = ((float)((date.getTime() - previousPoint.date.getTime()))) / 1000;
             float bDiff = ((float)((rx) - previousPoint.rx));
             bDiff /= tDiff;
-            return new PointValue(idx, bDiff / 1024);
+            return new PointValue(idx * REFRESH_INTERVAL, bDiff / 1024);
         }
 
         public PointValue getSpeedTx(int idx, Point previousPoint) {
             if (previousPoint == null) {
-                return new PointValue(idx, 0f);
+                return new PointValue(idx * REFRESH_INTERVAL, 0f);
             }
             float tDiff = ((float)((date.getTime() - previousPoint.date.getTime()))) / 1000;
             float bDiff = ((float)((tx) - previousPoint.tx));
             bDiff /= tDiff;
-            return new PointValue(idx, bDiff / 1024);
+            return new PointValue(idx * REFRESH_INTERVAL, bDiff / 1024);
         }
 
         public String toString() {
