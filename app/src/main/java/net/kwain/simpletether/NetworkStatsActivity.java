@@ -262,30 +262,14 @@ public class NetworkStatsActivity extends AppCompatActivity {
         List<Line> lines = new ArrayList<>();
 
         List<PointValue> sum = new ArrayList<>();
-        List<PointValue> rx = new ArrayList<>();
-        List<PointValue> tx = new ArrayList<>();
 
         int idx = 0;
         for (Point pt : stats) {
             sum.add(pt.getSum(idx));
-            rx.add(pt.getRx(idx));
-            tx.add(pt.getTx(idx));
             idx += 1;
         }
 
         Line line;
-
-        line = new Line(rx);
-        line.setColor(ChartUtils.COLOR_GREEN);
-        line.setHasLabels(false);
-        line.setHasPoints(false);
-        lines.add(line);
-
-        line = new Line(tx);
-        line.setColor(ChartUtils.COLOR_RED);
-        line.setHasLabels(false);
-        line.setHasPoints(false);
-        lines.add(line);
 
         line = new Line(sum);
         line.setColor(ChartUtils.COLOR_BLUE);
